@@ -1,174 +1,170 @@
 # Comparison of Numerical Algorithms: Accuracy, Speed and Computational Complexity
 
-**Course:** Computational Mathematics  
-**Group:** 10  
-**Project Topic:** Comparison of Numerical Algorithms: Accuracy, Speed and Computational Complexity
+## 1. Overview
 
-## 1. Project Overview
+This project compares three numerical algorithms used to solve nonlinear equations: the **Bisection Method**, **Newton-Raphson Method**, and **Secant Method**.
 
-This project examines and compares three numerical algorithms used to approximate solutions to nonlinear equations:
+The aim is to investigate how these methods perform in terms of accuracy, convergence, iteration count, execution time, and computational complexity.
 
-1. Bisection Method
-2. Newton-Raphson Method
-3. Secant Method
+The algorithms are implemented in MATLAB and tested using different nonlinear equations. Their results are then compared to understand their strengths, limitations, and suitability for solving numerical problems.
 
-The main objective is to investigate how these algorithms differ in terms of accuracy, convergence, computational effort and execution time when solving the same mathematical problems.
+## 2. Objectives
 
-The algorithms are implemented in MATLAB and evaluated using selected nonlinear equations. Their performance is examined through numerical experiments and comparisons.
+The main objectives of this project are to:
 
-## 2. Research Objectives
+- Implement the Bisection, Newton-Raphson, and Secant methods in MATLAB.
+- Apply the algorithms to selected nonlinear equations.
+- Compare the accuracy of the computed roots.
+- Examine the convergence behaviour and number of iterations required by each method.
+- Measure and compare their execution times.
+- Discuss the computational complexity and limitations of each algorithm.
 
-The project aims to:
-
-- Implement the Bisection, Newton-Raphson and Secant methods in MATLAB.
-- Evaluate the accuracy of the approximated roots.
-- Examine the convergence behaviour of each algorithm.
-- Compare the number of iterations required by each method.
-- Measure and compare execution times.
-- Examine computational effort through function and derivative evaluations.
-- Identify the strengths and limitations of each method.
-
-## 3. Numerical Methods
+## 3. Numerical Algorithms
 
 ### 3.1 Bisection Method
 
-The Bisection Method is a bracketing method that repeatedly divides an interval into two halves to locate a root.
+The Bisection Method is a numerical technique used to find a root of a continuous function within an interval where the function changes sign.
 
-It requires a continuous function and an initial interval `[a, b]` where the function has opposite signs at the endpoints:
+It repeatedly divides the interval into two equal parts and selects the subinterval that contains the root.
 
-\[
-f(a)f(b)<0
-\]
+The method is reliable when the initial interval satisfies the sign-change condition:
 
-The midpoint is calculated using:
+$$
+f(a)f(b) < 0
+$$
 
-\[
-c=\frac{a+b}{2}
-\]
-
-The interval is then reduced based on the sign of the function at the midpoint.
-
-**Characteristics:**
-- Does not require differentiation.
-- Requires an interval that brackets a root.
-- Has linear convergence under standard assumptions.
-- Generally reliable when its bracketing conditions are satisfied.
+Its main advantage is reliability, although it generally converges more slowly than Newton-Raphson and Secant methods.
 
 ### 3.2 Newton-Raphson Method
 
-The Newton-Raphson Method uses the derivative of a function to improve an initial approximation of a root.
+The Newton-Raphson Method uses the derivative of a function to obtain successive approximations of a root.
 
 Its iteration formula is:
 
-\[
-x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}
-\]
+$$
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+$$
 
-**Characteristics:**
-- Requires a derivative.
-- Uses one initial approximation.
-- Can converge rapidly near a suitable root.
-- Has quadratic local convergence under appropriate conditions.
-- May fail with a poor initial guess or a zero or very small derivative.
+The method can converge very quickly when the initial approximation is sufficiently close to a simple root.
+
+However, it requires the derivative of the function and may fail when the derivative is zero or very close to zero.
 
 ### 3.3 Secant Method
 
-The Secant Method approximates the derivative using two previous approximations instead of calculating the derivative directly.
+The Secant Method is similar to Newton-Raphson, but it approximates the derivative using two previous approximations.
 
 Its iteration formula is:
 
-\[
-x_{n+1}=x_n-
+$$
+x_{n+1} = x_n -
 \frac{f(x_n)(x_n-x_{n-1})}
 {f(x_n)-f(x_{n-1})}
-\]
+$$
 
-**Characteristics:**
-- Does not require an explicit derivative.
-- Requires two initial approximations.
-- Generally has superlinear convergence under suitable conditions.
-- Can encounter problems when the denominator becomes zero or very small.
+Unlike Newton-Raphson, it does not require an explicit derivative.
+
+It generally converges faster than the Bisection Method but does not always guarantee convergence.
 
 ## 4. Test Equations
 
-The three methods are evaluated using the following nonlinear equations.
+The algorithms are tested using three nonlinear equations.
 
-| Test | Equation | Reference Root |
-|---|---|---:|
-| 1 | \(x^2-2=0\) | 1.4142135624 |
-| 2 | \(x^3-x-2=0\) | 1.5213797068 |
-| 3 | \(\cos(x)-x=0\) | 0.7390851332 |
+| Test | Equation | Initial Values |
+|---|---|---|
+| 1 | \(f(x)=x^2-2\) | Bisection: [1, 2], Newton: 1.5, Secant: 1, 2 |
+| 2 | \(f(x)=x^3-x-2\) | Bisection: [1, 2], Newton: 1.5, Secant: 1, 2 |
+| 3 | \(f(x)=\cos(x)-x\) | Bisection: [0, 1], Newton: 0.5, Secant: 0, 1 |
 
-The reference roots are used to calculate the absolute error of each numerical approximation.
+The reference roots used for calculating errors are approximately:
 
-All three algorithms are tested against the same equations to make their results comparable.
+| Test | Reference Root |
+|---|---:|
+| \(x^2-2=0\) | 1.414213562373095 |
+| \(x^3-x-2=0\) | 1.521379706804568 |
+| \(\cos(x)-x=0\) | 0.739085133215161 |
+
+These reference values provide a basis for evaluating the accuracy of the computed approximations.
 
 ## 5. Experimental Settings
 
-The implementation uses the following settings:
+To maintain consistency during the comparison, the following settings are used:
 
 | Parameter | Value |
 |---|---:|
 | Tolerance | \(10^{-10}\) |
-| Maximum Iterations | 100 |
-| Timing Repetitions | 30 |
+| Maximum iterations | 100 |
+| Timing repetitions | 30 |
+| Programming environment | MATLAB |
 
-### Initial Approximations
+Each algorithm is tested using the same tolerance and maximum iteration limit.
 
-| Method | Initial Values |
-|---|---|
-| Bisection | An interval `[a, b]` |
-| Newton-Raphson | One initial guess |
-| Secant | Two initial guesses |
+The execution time is measured over repeated runs to calculate an average.
 
-The initial values are defined separately for each test equation in `main.m`.
+## 6. Performance Measures
 
-## 6. Performance Evaluation
-
-The algorithms are compared using the following measurements.
+The algorithms are evaluated using the following measures.
 
 ### 6.1 Absolute Error
 
 Absolute error measures the difference between the computed root and its reference value.
 
-\[
-E_a=|x_{\text{computed}}-x_{\text{reference}}|
-\]
+$$
+E_a = |x_{\text{computed}} - x_{\text{reference}}|
+$$
 
 A smaller absolute error indicates a closer approximation to the reference root.
 
-### 6.2 Residual
+### 6.2 Relative Error
+
+Relative error measures the absolute error in relation to the magnitude of the reference root.
+
+$$
+E_r = \frac{|x_{\text{computed}} - x_{\text{reference}}|}
+{|x_{\text{reference}}|}
+$$
+
+It helps compare the accuracy of approximations across problems with different root magnitudes.
+
+### 6.3 Residual
 
 The residual measures how closely the computed root satisfies the original equation.
 
-\[
-R=|f(x_{\text{computed}})|
-\]
+$$
+R = |f(x_{\text{computed}})|
+$$
 
-A smaller residual indicates that the computed value satisfies the equation more closely. Residual and absolute root error are related but are not identical.
+A smaller residual indicates that the computed value satisfies the original equation more closely.
 
-### 6.3 Number of Iterations
+### 6.4 Iteration Count
 
-This records how many updates an algorithm performs before meeting its stopping condition or reaching the maximum iteration limit.
+The iteration count records how many iterations an algorithm performs before reaching the stopping condition or maximum iteration limit.
 
-### 6.4 Execution Time
+It helps compare how quickly each method approaches a solution.
 
-Execution time measures how long an algorithm takes to complete.
+### 6.5 Execution Time
 
-Each method is executed repeatedly, and the average measured execution time is recorded.
+Execution time measures how long an algorithm takes to produce an approximation.
 
-Small timing differences should be interpreted carefully because computer workload and other system conditions can affect measurements.
+The implementation uses repeated runs to calculate the average execution time. This helps reduce the effect of timing variations between individual runs.
 
-### 6.5 Function and Derivative Evaluations
+### 6.6 Computational Complexity
 
-The implementation also counts function evaluations and derivative evaluations.
+Computational complexity describes the amount of computational work required by an algorithm.
 
-This helps examine the computational work required by each algorithm, rather than relying only on iteration counts.
+For this comparison, we consider the work performed per iteration, including function evaluations, derivative evaluations, and the total number of iterations.
+
+The three methods have different convergence characteristics:
+
+- **Bisection Method:** Linear convergence. It reduces the interval containing the root by half in each iteration.
+- **Newton-Raphson Method:** Quadratic convergence near a simple root when the initial approximation is sufficiently close and the required conditions are satisfied.
+- **Secant Method:** Superlinear convergence, with an approximate convergence order of 1.618 under suitable conditions.
 
 ## 7. Project Structure
 
+The project is organized into separate MATLAB files to make the implementation easier to understand and maintain.
+
 ```text
-numerical-algorithms-comparison/
+Numerical-Algorithms-Comparison/
 │
 ├── main.m
 ├── bisection.m
@@ -176,99 +172,84 @@ numerical-algorithms-comparison/
 ├── secant.m
 ├── README.md
 │
-└── comparison_results.csv
+└── comparison_results.csv  (generated after running the program)
 ```
+
+### File Description
 
 | File | Description |
 |---|---|
-| `main.m` | Runs the experiments and generates comparisons. |
-| `bisection.m` | Implementation of the Bisection Method. |
-| `newtonRaphson.m` | Implementation of the Newton-Raphson Method. |
-| `secant.m` | Implementation of the Secant Method. |
-| `README.md` | Project documentation and instructions. |
-| `comparison_results.csv` | Generated numerical results. |
-
-The CSV file is generated when the main script runs successfully.
+| `main.m` | Main script that runs the experiments, collects results, and generates comparisons. |
+| `bisection.m` | Contains the Bisection Method implementation. |
+| `newtonRaphson.m` | Contains the Newton-Raphson Method implementation. |
+| `secant.m` | Contains the Secant Method implementation. |
+| `README.md` | Project documentation. |
+| `comparison_results.csv` | Stores the experimental results generated by the program. |
 
 ## 8. Requirements
 
-- MATLAB with support for function handles, user-defined functions, tables and plotting.
-- The project source files.
-- A computer capable of running MATLAB.
+To run this project, you need:
+
+- MATLAB installed on your computer.
+- Basic knowledge of running MATLAB scripts.
+- The project files downloaded or cloned to your local machine.
 
 ## 9. How to Run the Project
 
-1. Clone or download this repository.
-2. Extract the project files if downloaded as a ZIP archive.
+1. Download or clone this repository.
+2. Extract the project folder if downloaded as a ZIP file.
 3. Open MATLAB.
 4. Navigate to the project directory.
-5. Ensure all four `.m` files are in the same directory.
-6. Open the MATLAB Command Window.
-7. Run the main script:
+5. Run the main script:
 
 ```matlab
 main
 ```
 
-The program will:
+The script will execute the three numerical methods using the selected test equations and display the comparison results.
 
-- Execute all three numerical methods.
-- Test them against the three nonlinear equations.
-- Display the numerical comparison in the Command Window.
-- Generate convergence graphs.
-- Save the results in `comparison_results.csv`.
+## 10. Expected Output
 
-## 10. Understanding the Output
+After running the program, the results should provide information about:
 
-The program produces comparison results containing:
+- The approximated root produced by each algorithm.
+- The number of iterations required.
+- The absolute error.
+- The residual.
+- The average execution time.
+- The comparison of convergence behaviour.
 
-- Test equation.
-- Numerical method.
-- Approximate root.
-- Number of iterations.
-- Absolute error.
-- Residual.
-- Function evaluations.
-- Derivative evaluations.
-- Average execution time.
-- Convergence status.
+The program also generates comparison results that can be used for further analysis and discussion in the research report.
 
-The convergence graphs illustrate how the absolute error changes across iterations for each algorithm.
+**Note:** Actual experimental results should be obtained by running the MATLAB implementation. No performance values are assumed or presented in advance.
 
-The generated results should be used to discuss the differences between the methods. No algorithm should be assumed to be the fastest or most accurate before examining the actual experimental results.
+## 11. Contributions
 
-## 11. Limitations
+The project involves both the theoretical study of numerical methods and their practical implementation.
 
-- The experiments use only three nonlinear equations.
-- Performance can change depending on the initial approximations.
-- Execution times can vary depending on the computer and its current workload.
-- Reference roots are numerical approximations used for comparison.
-- Successful convergence on these test equations does not guarantee convergence for every nonlinear equation.
+My contributions to the project include:
 
-## 12. Contributions
+### MATLAB Implementation and Experimental Setup
 
-My contribution to the project focuses on the computational implementation and final integration of the research work.
+- Implementing the Bisection, Newton-Raphson, and Secant methods in MATLAB.
+- Preparing the test equations and initial approximations.
+- Setting up the experiments to compare accuracy, iteration counts, and execution time.
+- Working on the collection and presentation of the computational results.
 
-**MATLAB Implementation and Experimental Setup**
-- Implemented the Bisection, Newton-Raphson and Secant methods in MATLAB.
-- Prepared the test equations and initial approximations.
-- Developed the experimental setup for comparing accuracy, convergence and computational performance.
-- Prepared the result collection and visualization components.
+### Final Compilation and Integration
 
-**Final Compilation and Integration**
-- Volunteered to coordinate the final compilation of the research report.
-- Responsible for bringing together the individual contributions from group members.
-- Responsible for reviewing the consistency and organization of the final document.
-- Responsible for compiling and checking the references and formatting before submission.
+I also volunteered to coordinate the final compilation of the group report. This includes bringing together the contributions from group members, checking consistency across the chapters, organizing references, and handling the final formatting of the document before submission.
 
-## 13. Conclusion
+## 12. Conclusion
 
-This project provides a practical comparison of three widely used numerical root-finding algorithms.
+This project provides a practical comparison of three numerical methods for solving nonlinear equations.
 
-By implementing the methods in MATLAB and evaluating their accuracy, convergence behaviour, iteration counts and computational effort, the project aims to demonstrate that different numerical algorithms have different strengths and limitations.
+Although all three methods aim to approximate roots, they differ in their requirements, convergence behaviour, accuracy, and computational work.
 
-The final conclusions will be based on the actual experimental results.
+By implementing and testing them in MATLAB, the project aims to provide a better understanding of how numerical algorithms perform under different conditions and why choosing an appropriate method matters when solving mathematical problems.
 
-## 14. Academic Note
+## 13. Academic Note
 
-This repository contains the MATLAB implementation and experimental setup supporting the group's Computational Mathematics research project. The implementation and numerical findings should be considered alongside the mathematical theory and analysis presented in the final research report.
+This project is being developed as part of the Computational Mathematics coursework at the University of The Gambia.
+
+The implementation and experimental results are intended to support the mathematical analysis and discussion presented in the accompanying research report.</
